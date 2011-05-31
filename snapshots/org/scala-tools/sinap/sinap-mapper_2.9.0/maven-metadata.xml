@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.scala-tools.sinap</groupId>
+  <artifactId>sinap-mapper_2.9.0</artifactId>
+  <versioning>
+    <versions>
+      <version>0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20110531190308</lastUpdated>
+  </versioning>
+</metadata>
