@@ -39,7 +39,8 @@ You can find me on IRC using the freenode network: #scala, #elasticsearch and #s
 **Immunizer SA**
 
 _Design and implementation of a mutualized electronic commerce plateform_
-* Implemtation of miscealenous features inside backend
+
+* Implementation of miscealenous features inside backend
 
 ## 2008 - 2011
 **Philip Morris International - R&D**
