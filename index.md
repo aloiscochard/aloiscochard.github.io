@@ -36,14 +36,14 @@ You can find me on IRC using the freenode network: #scala, #elasticsearch, #stac
 # Experience
 
 ## 2011 - Present
-**E-mmunizer SA**
+**Immunizer SA**
 
 Electronic commerce
 
 ## 2008 - 2011
 **Philip Morris International**
 
-Sementic search engine
+Semantic search engine
 
 ## 2000 - 2008
 **Business Software SA**
