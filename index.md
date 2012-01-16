@@ -7,7 +7,7 @@ subsections: []
 
 ## Passionate Hacker
 
-I'm a software engineer with a strong passion for distributed computing.
+I'm a software engineer with a strong passion for programming language and distributed computing.
 
 Scala / Java / Python / C#
 
@@ -28,4 +28,9 @@ alois.cochard |AT| gmail.com
 
 [http://ch.linkedin.com/in/aloiscochard](http://ch.linkedin.com/in/aloiscochard)
 
+# Experience
+
+## 2001
+
+Business Software SA
   
