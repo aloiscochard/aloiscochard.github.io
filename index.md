@@ -9,7 +9,7 @@ subsections: []
 
 I'm a software engineer with a strong passion for programming languages and distributed computing.
 
-Scala / Java / Python / C#
+Scala / Java / Python / C# / ECMAScript / ...
 
 * Blog: [http://aloiscochard.blogspot.com](http://aloiscochard.blogspot.com)
 * GitHub: [http://github.com/aloiscochard](http://github.com/aloiscochard)
@@ -31,21 +31,26 @@ alois.cochard |AT| gmail.com
 
 [http://ch.linkedin.com/in/aloiscochard](http://ch.linkedin.com/in/aloiscochard)
 
-You can find me on IRC using the freenode network: #scala, #elasticsearch, #stackoverflow
+You can find me on IRC using the freenode network: #scala, #elasticsearch and #stackoverflow
 
 # Experience
 
 ## 2011 - Present
 **Immunizer SA**
-
-Electronic commerce
+* Design and implementation of a mutualized electronic commerce plateform
+  * Implemtation of miscealenous features inside backend
 
 ## 2008 - 2011
-**Philip Morris International**
+**Philip Morris International - R&D**
+* Design and implementation of a semantic search engine and text analytics framework
+  * Design and implementation of the search engine (Lucene, NoSQL) 
+  * Design and implementation of the distributed batch processign framework (Spring Batch, GridGain)
+  * Implementation of miscealenous features for the text analytics framework
+  * Prototyping of distributed database/cache architectures (Hadoop, Terracotta, Coherence)
 
 Semantic search engine
 
-## 2000 - 2008
+## 2004 - 2008
 **Business Software SA**
-  
-ERP
+* Design and implementation of an ERP (Entreprise Resource Planning) system
+* Design and implementation of an ECM (Electronic Content Managment) system
