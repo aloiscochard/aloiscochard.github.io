@@ -37,16 +37,16 @@ You can find me on IRC using the freenode network: #scala, #elasticsearch and #s
 
 ## 2011 - Present
 **Immunizer SA**
-* Design and implementation of a mutualized electronic commerce plateform
- * Implemtation of miscealenous features inside backend
+_Design and implementation of a mutualized electronic commerce plateform_
+* Implemtation of miscealenous features inside backend
 
 ## 2008 - 2011
 **Philip Morris International - R&D**
-* Design and implementation of a semantic search engine and text analytics framework
- * Design and implementation of the search engine (Lucene, NoSQL) 
- * Design and implementation of the distributed batch processign framework (Spring Batch, GridGain)
- * Implementation of miscealenous features for the text analytics framework
- * Prototyping of distributed database/cache architectures (Hadoop, Terracotta, Coherence)
+_Design and implementation of a semantic search engine and text analytics framework_
+* Design and implementation of the search engine (Lucene, NoSQL) 
+* Design and implementation of the distributed batch processign framework (Spring Batch, GridGain)
+* Implementation of miscealenous features for the text analytics framework
+* Prototyping of distributed database/cache architectures (Hadoop, Terracotta, Coherence)
 
 Semantic search engine
 
