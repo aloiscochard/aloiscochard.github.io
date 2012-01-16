@@ -11,8 +11,8 @@ I'm a software engineer with a strong passion for programming languages and dist
 
 Scala / Java / Python / C#
 
-Blog: [http://aloiscochard.blogspot.com](http://aloiscochard.blogspot.com)
-GitHub: [http://github.com/aloiscochard](http://github.com/aloiscochard)
+* Blog: [http://aloiscochard.blogspot.com](http://aloiscochard.blogspot.com)
+* GitHub: [http://github.com/aloiscochard](http://github.com/aloiscochard)
 
 ### Author
 * [Sandra](http://github.com/aloiscochard/sandra/): An [Apache Cassandra](http://cassandra.apache.org) toolkit for the [Scala](http://www.scala-lang.org) programming language.
@@ -38,9 +38,14 @@ You can find me on IRC using the freenode network: #scala, #elasticsearch, #stac
 ## 2011 - Present
 **E-mmunizer SA**
 
+Electronic commerce
+
 ## 2008 - 2011
 **Philip Morris International**
+
+Sementic search engine
 
 ## 2000 - 2008
 **Business Software SA**
   
+ERP
