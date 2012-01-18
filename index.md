@@ -18,8 +18,8 @@ Scala / Java / Python / C# / ECMAScript
 * [Sandra](http://github.com/aloiscochard/sandra/): An [Apache Cassandra](http://cassandra.apache.org) toolkit for the [Scala](http://www.scala-lang.org) programming language.
 * [Sindi](http://aloiscochard.github.com/sindi/): An IoC ([Inversion of Control](http://martinfowler.com/articles/injection.html)) container for the [Scala](http://www.scala-lang.org) programming language.
 * [Dvorhack](http://github.com/aloiscochard/dvorhack/): A custom keyboard layout based on Dvorak optimized for hacking.
-* [spring-batch-gridgain](https://github.com/aloiscochard/spring-batch-integration-gridgain): Spring batch integration module for GridGain
-* [spring-security-ntlm](https://github.com/aloiscochard/spring-security-ntlm): Spring security integration module for NTLM
+* [spring-batch-gridgain](https://github.com/aloiscochard/spring-batch-integration-gridgain): [GridGain](http://www.gridgain.com/) integration for [Spring Batch](http://static.springsource.org/spring-batch/)
+* [spring-security-ntlm](https://github.com/aloiscochard/spring-security-ntlm): NTLM integration for [Spring Security](http://static.springsource.org/spring-security/site/)
 
 ### Contributor
 * [ElasticSearch](https://github.com/aloiscochard/elasticsearch-osem): A distributed, RESTful, open source search server based on [Apache Lucene](https://en.wikipedia.org/wiki/Apache_Lucene)
