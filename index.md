@@ -9,7 +9,7 @@ subsections: []
 
 I'm a software engineer with a strong passion for programming languages and distributed computing.
 
-Scala / Java / Python / C# / ECMAScript / ...
+Scala / Java / Python / C# / ECMAScript
 
 * Blog: [http://aloiscochard.blogspot.com](http://aloiscochard.blogspot.com)
 * GitHub: [http://github.com/aloiscochard](http://github.com/aloiscochard)
