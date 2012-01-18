@@ -38,7 +38,7 @@ You can find me on IRC using the freenode network: #scala, #elasticsearch and #s
 ## 2011 - Present
 **Immunizer SA**
 
-_Design and implementation of a mutualized electronic commerce plateform_
+_Design and implementation of a mutualized electronic commerce platform_
 
 * Implementation of miscealenous features inside backend
 
