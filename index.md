@@ -18,7 +18,7 @@ Scala / Java / Python / C# / ECMAScript
 * [Sandra](http://github.com/aloiscochard/sandra/): An [Apache Cassandra](http://cassandra.apache.org) toolkit for the [Scala](http://www.scala-lang.org) programming language.
 * [Sindi](http://aloiscochard.github.com/sindi/): An IoC ([Inversion of Control](http://martinfowler.com/articles/injection.html)) container for the [Scala](http://www.scala-lang.org) programming language.
 * [Dvorhack](http://github.com/aloiscochard/dvorhack/): A custom keyboard layout based on Dvorak optimized for hacking.
-* [spring-batch-integration-gridgain](https://github.com/aloiscochard/spring-batch-integration-gridgain): Spring batch integration module for GridGain
+* [spring-batch-gridgain](https://github.com/aloiscochard/spring-batch-integration-gridgain): Spring batch integration module for GridGain
 * [spring-security-ntlm](https://github.com/aloiscochard/spring-security-ntlm): Spring security integration module for NTLM
 
 ### Contributor
@@ -58,5 +58,8 @@ _Design and implementation of a semantic search engine and text analytics framew
 * Design and implementation of an ERP (Enterprise Resource Planning) system
 * Design and implementation of an ECM (Electronic Content Managment) system
 
-## 2000 - 2004 (Education)
-**CFC Computer Engineer, EPSIC Lausanne, Switzerland**
+# Education
+
+## 2000 - 2004
+**EPSIC Lausanne**
+* CFC Computer Engineer
