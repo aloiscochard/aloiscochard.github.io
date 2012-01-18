@@ -55,5 +55,5 @@ Semantic search engine
 
 ## 2004 - 2008
 **Business Software SA**
-* Design and implementation of an ERP (Entreprise Resource Planning) system
+* Design and implementation of an ERP (Enterprise Resource Planning) system
 * Design and implementation of an ECM (Electronic Content Managment) system
