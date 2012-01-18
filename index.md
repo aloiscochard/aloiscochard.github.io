@@ -66,4 +66,5 @@ _Design and implementation of a semantic search engine and text analytics framew
 
 ## 2000 - 2004
 **EPSIC Lausanne**
+
 * CFC Computer Engineer
