@@ -40,15 +40,15 @@ You can find me on IRC using the freenode network: #scala, #elasticsearch and #s
 
 _Design and implementation of a mutualized electronic commerce platform_
 
-* Implementation of miscealenous features inside backend
+* Implementation of miscellaneous features inside backend
 
 ## 2008 - 2011
 **Philip Morris International - R&D**
 
 _Design and implementation of a semantic search engine and text analytics framework_
 * Design and implementation of the search engine (Lucene, NoSQL) 
-* Design and implementation of the distributed batch processign framework (Spring Batch, GridGain)
-* Implementation of miscealenous features for the text analytics framework
+* Design and implementation of the distributed batch processing framework (Spring Batch, GridGain)
+* Implementation of miscellaneous features for the text analytics framework
 * Prototyping of distributed database/cache architectures (Hadoop, Terracotta, Coherence)
 
 Semantic search engine
