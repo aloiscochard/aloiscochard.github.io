@@ -22,7 +22,7 @@ I'm a software engineer with a strong passion for programming languages and dist
 * [Sherpa](http://github.com/aloiscochard/sherpa/): A serialization toolkit for [Scala](http://www.scala-lang.org) with macro-oriented case classes mapping.
 * [Sandra](http://github.com/aloiscochard/sandra/): An [Apache Cassandra](http://cassandra.apache.org) toolkit for the [Scala](http://www.scala-lang.org) programming language (WIP).
 * [Sindi](http://aloiscochard.github.com/sindi/): An IoC ([Inversion of Control](http://martinfowler.com/articles/injection.html)) container for the [Scala](http://www.scala-lang.org) programming language.
-* [xsbt-fmpp-plugin](https://github.com/aloiscochard/xsbt-fmpp-plugin): FreeMarker Scala/Java Templating Plugin for [XSBT](https://github.com/harrah/xsbt). 
+* [sbt-fmpp](https://github.com/sbt/sbt-fmpp): FreeMarker Scala/Java Templating Plugin for [XSBT](https://github.com/harrah/xsbt). 
 * [Dvorhack](http://github.com/aloiscochard/dvorhack/): A custom keyboard layout based on Dvorak optimized for hacking.
 * [spring-batch-gridgain](https://github.com/aloiscochard/spring-batch-integration-gridgain): [GridGain](http://www.gridgain.com/) integration for [Spring Batch](http://static.springsource.org/spring-batch/)
 * [spring-security-ntlm](https://github.com/aloiscochard/spring-security-ntlm): NTLM integration for [Spring Security](http://static.springsource.org/spring-security/site/)
