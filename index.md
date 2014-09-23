@@ -7,51 +7,48 @@ subsections: []
 
 ## Passionate Hacker
 
-I'm a software engineer with a strong passion for programming languages and distributed computing.
+I'm a software engineer with a strong passion for programming languages theory and distributed computing.
+I have contributed to a bunch of open source projects and have also maintained my owns, you can find most of them from my GitHub account.
 
-
-* Blog: [http://aloiscochard.blogspot.com](http://aloiscochard.blogspot.com)
 * GitHub: [http://github.com/aloiscochard](http://github.com/aloiscochard)
 
-### Skills
-* Scala / Java / Python / C# / ECMAScript
-* GIT / SVN
-* SBT / Maven
+### Skills & Interests
+* Category Theory
+* Concurrency and Parallelism
+* Distributed Computing
+* Formal Methods
+* Programming Languages 
+* Type Theory
 
-### Author
-* [Sherpa](http://github.com/aloiscochard/sherpa/): A serialization toolkit for [Scala](http://www.scala-lang.org) with macro-oriented case classes mapping.
-* [Sandra](http://github.com/aloiscochard/sandra/): An [Apache Cassandra](http://cassandra.apache.org) toolkit for the [Scala](http://www.scala-lang.org) programming language (WIP).
-* [Sindi](http://aloiscochard.github.com/sindi/): An IoC ([Inversion of Control](http://martinfowler.com/articles/injection.html)) container for the [Scala](http://www.scala-lang.org) programming language.
-* [sbt-fmpp](https://github.com/sbt/sbt-fmpp): FreeMarker Scala/Java Templating Plugin for [XSBT](https://github.com/harrah/xsbt). 
-* [Dvorhack](http://github.com/aloiscochard/dvorhack/): A custom keyboard layout based on Dvorak optimized for hacking.
-* [spring-batch-gridgain](https://github.com/aloiscochard/spring-batch-integration-gridgain): [GridGain](http://www.gridgain.com/) integration for [Spring Batch](http://static.springsource.org/spring-batch/)
-* [spring-security-ntlm](https://github.com/aloiscochard/spring-security-ntlm): NTLM integration for [Spring Security](http://static.springsource.org/spring-security/site/)
-
-### Contributor
-* [Shapeless](https://github.com/milessabin/shapeless): An exploration of generic/polytypic programming in [Scala](http://www.scala-lang.org)
-* [ElasticSearch](https://github.com/aloiscochard/elasticsearch-osem): A distributed, RESTful, open source search server based on [Apache Lucene](https://en.wikipedia.org/wiki/Apache_Lucene)
-* [Restlet](http://www.restlet.org/): A lightweight, comprehensive, open source REST framework for the Java platform
+### Talks
+* A gentle introduction to DSL design in Scala (FunctionalMedia - Mars 2014) | [slides](http://prezi.com/3pq-fjwxbatb)
+* One API to rule them all (ScalaDays 2013) | [video](http://www.parleys.com/play/51c0d0ece4b0ed877035680e)
 
 # Contact
 
-alois.cochard |AT| gmail.com / +44 7935 257 080 / skype: alois.cochard
+alois.cochard |AT| gmail.com / skype: alois.cochard
 
 [http://twitter.com/aloiscochard](http://www.twitter.com/aloiscochard)
 
 [http://ch.linkedin.com/in/aloiscochard](http://ch.linkedin.com/in/aloiscochard)
 
-You can find me on IRC using the freenode network: #scala
+You can find me on IRC using the freenode network: #haskell #isabelle #scala #typelevel
 
 # Experience
 
-## 2013
+## 2013 - Current
 **Time Out**
 
-## 2012
+_Design and implementation of the global platform for editorial content managment_
+* Design and implementation of the public API (Spray, Solr, Slick) 
+* Migration of the internal web services platform to a new Scala stack
+* Implementation of miscellaneous internal web services
+
+## 2012 - 2013
 **OpenCredo**
 
 _Design and implemntation of a web service for a community oriented review system_
-* Migrating data from graph database to NoSQL storage (Neo4j, Cassandra)
+* Migration from graph database to NoSQL storage (Neo4j, Cassandra)
 * Design and implementation of a web service to query/command data model (Play! Framework, RabbitMQ)
 
 ## 2011 - 2012
