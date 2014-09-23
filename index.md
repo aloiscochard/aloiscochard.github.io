@@ -48,7 +48,7 @@ _Design and implementation of the global platform for editorial content managmen
 ## 2012 - 2013
 **OpenCredo**
 
-_Design and implemntation of a web service for a community oriented review system_
+_Design and implementation of a web service for a community oriented review system_
 
 * Migration from graph database to NoSQL storage (Neo4j, Cassandra)
 * Design and implementation of a web service to query/command data model (Play! Framework, RabbitMQ)
