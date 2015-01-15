@@ -36,7 +36,13 @@ You can find me on IRC using the freenode network: #haskell #isabelle #scala #ty
 
 # Experience
 
-## 2013 - Current
+## 2014 - Current
+
+**BestMile**
+
+_Design and implementation of a collective intelligence system for fleet control of self-driving cars_
+
+## 2013 - 2014
 **Time Out**
 
 _Design and implementation of the global platform for editorial content managment_
