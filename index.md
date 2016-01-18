@@ -8,6 +8,7 @@ subsections: []
 ## Passionate Hacker
 
 I'm a software engineer with a strong passion for programming languages theory and distributed computing.
+
 I have contributed to a bunch of open source projects and have also maintained my owns, you can find most of them from my GitHub account.
 
 * GitHub: [http://github.com/aloiscochard](http://github.com/aloiscochard)
