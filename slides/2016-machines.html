@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to the Machines</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Welcome to the Machines
+
+ <img src="https://s-media-cache-ak0.pinimg.com/originals/4d/62/15/4d62157e9822afa7818096bae04262b9.jpg" width="330" height="330">
+
+Aloïs Cochard
+
+@aloiscochard
+---
+
+# About me
+
+You can find me online (github, twitter, irc...) under `aloiscochard`.
+
+#### Open Source Contributor
+- Haskell
+  - codex, sarsi, codec-jvm, machines-*, ...
+- Scala
+  - scato, scalaz, ...
+
+#### CTO @ BestMile
+An EPFL spin-off based in Lausanne, Switzerland.
+
+We are building an operating platform for *autonomous* mobility, were the core engine is written in `Scala`.
+
+**<center><font color="red">We are hiring!</font>**
+  <br/>http://bestmile.workable.com</center>
+
+---
+
+# Agenda
+
+
+We will explore together the (fascinating) design space of data streaming in the context of purely functional language, namely `haskell`.
+
+
+**Theory**
+
+- A little history of data streaming
+
+- Trade-offs and compromises of existing implementations
+
+**Practice**
+
+- Introduction to the `machines` <sup>1</sup> library
+
+<br/>
+
+1: https://github.com/ekmett/machines
+
+---
+
+# History
+
+### The fundamental problem
+
+How to express a program that process a stream of data while:
+- interleaving effects
+- being constant in space and time
+- achieving strongest composability/reusability
+
+Let's see what happen if we support only **two** out of those **three** features ...
+
+---
+
+### No interleaving of effects
+
+Haskell `List` provide both constant space/time and strong composabiliy.
+
+```haskell
+xs :: [Int]
+xs = [0..]
+
+inc :: Int -> Int
+inc i = i + 1
+
+dec :: Int -> Int
+dec i = i - 10
+
+result :: [Int]
+result = take 10 $ fmap inc $ fmap dec xs
+
+main :: IO ()
+main = print result -- [-9,-8,-7,-6,-5,-4,-3,-2,-1,0]
+```
+
+Thanks to lazy evaluation and effects tracking, we get fancy `List` fusion ...
+
+... but there is no way to interleave effects into it!
+
+---
+
+### Not constant in space and time
+
+We can use monadic functions like `mapM` and `foldM` to interleave effects.
+
+```haskell
+inc :: Int -> IO Int
+inc i = return $ i + 1
+
+dec :: Int -> IO Int
+dec i = return $ i - 10
+
+xs :: [Int]
+xs = [0..]
+
+result :: IO [Int]
+result = do
+  ys <- mapM inc xs -- Will never terminate!
+  zs <- mapM dec ys
+  return $ take 10 zs
+
+main = do
+  xs <- result
+  print xs
+```
+
+We also achieve strong composability/reusability ...
+
+... but we loose constant space/time!
+
+---
+
+### Not composable/reusable
+
+We can write a specialized loop to get constant space/time.
+
+```haskell
+inc :: Int -> IO Int
+dec :: Int -> IO Int
+xs :: [Int]
+
+loop :: [Int] -> [Int] -> IO [Int]
+loop []       ys = return ys
+loop (x:xs)   ys =
+  if (length ys == 10) then return $ reverse ys
+  else do
+    i <- f x
+    loop xs $ i:ys
+  where f i = inc i >>= dec
+
+main = (loop xs []) >>= print -- [-9,-8,-7,-6,-5,-4,-3,-2,-1,0]
+```
+
+We are also interleaving effects ...
+
+... but the logic in the loop is ugly and specialized!
+---
+
+# History
+
+### The solutions
+
+A plenty!
+
+- At first there was **Lazy IO**
+  - unpredictable resources handling ...
+  - breaks equational reasoning
+- 2008 - **Iteratees** (and their dual, Generators)
+- 2011 - **Conduit**
+- 2012 - **Pipes**
+- 2012 - **Machines**
+
+Since I only started hacking with `Haskell` in 2014, I had to make a choice... 
+
+... and as you might have already guessed I did choose `machines` :-)
+
+**<center><font color="red">But why?</font>**</center>
+
+---
+
+# Trade-offs
+
+### Iteratee
+
+First pratical solution to the problem, appeared in 2008 eventually presented publicly by **Oleg Kiselyov** at FLOPS 2012.
+
+It contains specialized abstractions for each stages which are relatively complex to compose and works with.
+
+- `Iteratee` to consume data (equivalent to `Sink`)
+- `Generator` to produce data (equivalent to `Source`)
+- `Enumeratee` to tranform data (equivalent to `Process`)
+
+The handling of resources is arguably not optimal in the original implementation, 
+a few alternatives (`enumerator`, `iterIO`, ...) where designed trying to unify and improve the design.
+
+---
+
+# Trade-offs
+
+### Conduit
+
+Designed initally by **Michael Snoyman** for the **Yesod** <sup>1</sup> web framework, 
+it put a strong emphasis on exception and resources handling.
+
+The library evolved quite a lot over the years, 
+including lot of combinators, replacing mutable state with a CPS style 
+and eventually unifying all abstractions under a single `Conduit` type.
+
+The core abstraction mix a lot of different concerns, 
+for the better with automated resources handling or worse when trying to form nice abstractions.
+
+<br/>
+
+1: http://www.yesodweb.com
+
+---
+
+# Trade-offs
+
+### Pipes
+
+Another take to the problem developed by **Gabriel Gonzalez** with a strong emphasis on elegance.
+
+All concepts are unifed under a single `Pipe` type which form a nice and composable `Category`,
+like `conduit` it has a specific construct in it's core algebra to interleave effects.
+
+Unlike `conduit` it does not handle termination,
+a feature which sadly can not be added externally.
+
+---
+
+# Trade-offs
+
+### Machines
+
+Originally authored by **Edward Kmett** and **Rúnar Bjarnason** on a napkin, 
+it does not try to handle resources managment in the core and leave that job to the user.
+
+Unlike any other librairies it does support complex topology by paramterizing the input language, 
+and regarding performance it has the best asymptotic complexity among all alternatives.
+
+Fundamentally the design is not yet complete as some abstractions (`PlanT` and `MachineT`) could be in theory unifed,
+but we don't know yet how to do it!
+
+Still it achieves, in my opinion, a neat and simple design for such a complex problem.
+---
+
+# Trade-offs
+
+### Summary
+
+If we take out resources handling (and it seems we should!) 
+there is nothing you can't do with `machines` that you could do with any other alternatives.
+
+The `conduit` library mixes too many concerns to my taste, while `pipes` miss some key features.
+
+The ecosystem of `conduit` is massive and can't be compared with the one of `machines`,
+but this is most likely a temporary situation and you might start contributing after this talk!
+
+<center>
+<img src="https://pbs.twimg.com/profile_images/378800000806784826/cab84f342994cac8ca51f7cab0ccfdbd_400x400.jpeg" width="180" height="180">
+</center>
+
+---
+
+# Machines Tutorial
+
+### Here comes the types
+
+The core algebra `Step`.
+
+```haskell
+data Step k o r
+  = Stop
+  | Yield o r
+  | forall t. Await (t -> r) (k t) r
+```
+
+The root of all other types `MachineT` ...
+
+```haskell
+newtype MachineT m k o = 
+  MachineT { runMachineT :: m (Step k o (MachineT m k o)) }
+```
+
+... and it's monad-free alias `Machine` which uses existential quantification.
+
+```haskell
+type Machine k o = forall m. Monad m => MachineT m k o
+```
+
+---
+
+# Machines Tutorial
+
+### Here comes more types
+
+The `Source` which discard the input language `k`.
+
+```haskell
+type Source b = forall k. Machine k b
+type SourceT m b = forall k. MachineT m k b
+```
+
+The `Process` which restrict the input language to values of type `a`.
+
+```haskell
+type Process a b = Machine (Is a) b
+type ProcessT m a b = MachineT m (Is a) b
+```
+
+Note that the type `Is` does simply witness type equality.
+
+``` haskell
+data Is a b where
+  Refl :: Is a a
+```
+
+---
+
+# Machines Tutorial
+
+### Where is the Sink?
+
+Ideally we would like to say:
+
+```haskell
+type SinkT m a = forall b. MachineT m (Is a) b
+```
+
+But it doesn't works so well in practice :-(
+
+TODO: ADD MORE INFO OF WHY?
+
+---
+
+# Machines Tutorial
+
+### Here comes the plan
+
+A `Machine` is usually construced from a `Plan` which would ideally looks like.
+
+```haskell
+data Plan k o a
+  = Done a
+  | Yield o (Plan k o a)
+  | forall z. Await (z -> Plan k o a) (k z) (Plan k o a)
+  | Fail
+```
+
+But it is actually encoded in a CPS'd form.
+
+Let's see how it looks for real ...
+
+**<center><font color="red">Don't be scared!</font>**
+
+---
+
+# Machines Tutorial
+
+### Here comes the plan
+
+```haskell
+newtype PlanT k o m a = PlanT
+  { runPlanT :: forall r.
+      (a -> m r) ->                                     
+      (o -> m r -> m r) ->                              
+      (forall z. (z -> m r) -> k z -> m r -> m r) ->    
+      m r ->                                            
+      m r
+  }
+```
+
+Without understanding all the implementation details, 
+what is important to see here is the explicit continuation passing style.
+
+---
+
+# Machines Tutorial
+
+### Plan vs Machine/Step
+
+This dichotomy is critical to achieve the best performance possible (even though
+in theory it should be avoidable). 
+
+**<center>Trying to avoid it is definitely an interesting subject of research!</center>**
+
+What it means in practice: 
+- A `Plan` can not change it's program logic during it's execution (think non context-free parser), 
+while a `Machine` can. 
+
+If that doesn't makes any sense to, you can follow this simple advice:
+- Start by building a `Plan` (which have a friendlier API), 
+and switch to `Machine` only if you realize you are facing this limitation.
+
+---
+
+# Machines Tutorial
+
+<br/>
+<br/>
+<br/>
+
+##<center>Let's get our hands dirty!</center>
+
+<center><a href="https://github.com/aloiscochard/machines-tutorial">https://github.com/aloiscochard/machines-tutorial</a></center>
+
+<br/>
+<br/>
+
+```
+git clone https://github.com/aloiscochard/machines-tutorial
+stack build
+```
+
+---
+
+# Machines Tutorial
+
+### Example 1 - Inc & Dec
+
+Let's start by rewriting our original example.
+
+```haskell
+import Data.Machine
+
+inc :: Int -> IO Int
+inc i = return $ i + 1
+
+dec :: Int -> IO Int
+dec i = return $ i - 10
+
+xs :: [Int]
+xs = [0..]
+
+main :: IO ()
+main = do
+  ys <- runT $ taking 10 <~ autoM dec <~ autoM inc <~ source xs
+  print ys -- [-9,-8,-7,-6,-5,-4,-3,-2,-1,0]
+```
+
+**<center><font color="red">Hooray it works!</font>**
+
+---
+
+# Machines Tutorial
+
+### Example 2 - Fizz Buzz 
+
+```haskell
+import Control.Monad
+import Data.Machine
+
+fizzbuzz :: Process Int String
+fizzbuzz = repeatedly $ do
+  i <- await
+  let mod3 = mod i 3 == 0
+  let mod5 = mod i 5 == 0
+  when mod3 $ yield "Fizz"
+  when mod5 $ yield "Buzz"
+  when (not $ mod3 || mod5) $ yield $ show i
+
+xs :: [Int]
+xs = [0..]
+
+main :: IO ()
+main = runT_ $ autoM print <~ fizzbuzz <~ source xs
+```
+<br/>
+
+---
+
+# Machines Tutorial
+
+### Example 3 - Largest Word
+
+```haskell
+import Data.Machine
+import System.IO (IOMode(..), withFile)
+import System.IO.Machine (byLine, sourceHandle)
+
+import qualified Data.Text as T
+
+main :: IO ()
+main = do
+  xs <- withFile "./lorem-ipsum.txt" ReadMode $ \h ->
+    runT $ largest <~ auto T.length <~ asParts
+                   <~ auto T.words <~ sourceHandle byLine h
+  print xs -- [14]
+```
+<br/>
+
+---
+
+# Machines Tutorial
+
+### Example 4 - Walking Directory
+
+Let's write a complete program with what we learned so far!
+
+```haskell
+import Data.Machine
+import System.Directory.Machine
+import System.Environment (getArgs)
+import System.IO (IOMode(..), withFile)
+import System.IO.Machine (byLine, sourceHandle)
+
+import qualified Data.Text as T
+
+main :: IO ()
+main = do
+  dirs <- getArgs
+  runT_ $ (autoM print) <~ largest <~ (autoM count)
+                        <~ files <~ directoryWalk <~ source dirs
+    where
+      count :: FilePath -> IO Int
+      count file = do
+        xs <- withFile file ReadMode $ \h ->
+          runT $ largest <~ auto T.length <~ asParts
+                         <~ auto T.words <~ sourceHandle byLine h
+        return $ head xs
+```
+<br/>
+
+---
+
+# Machines Tutorial
+
+### Extra - Walking with a Machine
+
+TODO: show implementation with machine
+
+---
+# Thanks!
+
+- You can find the tutorial code online at https://github.com/aloiscochard/machines-tutorial
+
+## References
+
+- [Pipes Tutorial](https://hackage.haskell.org/package/pipes-4.2.0/docs/Pipes-Tutorial.html) by Gabriel Gonzalez
+- [The core flaw of pipes and conduit](http://www.yesodweb.com/blog/2013/10/core-flaw-pipes-conduit) by Michael Snoyman
+- [The source code of machines](https://github.com/ekmett/machines) by Edward Kmett and others
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
