@@ -43,7 +43,7 @@ You can find me online (github, twitter, irc...) under `aloiscochard`.
 #### CTO @ BestMile
 An EPFL spin-off based in Lausanne, Switzerland.
 
-We are building an operating platform for *autonomous* mobility, were the core engine is written in `Scala`.
+We are building an operating platform for *autonomous* mobility, where the core engine is written in `Scala`.
 
 **<center><font color="red">We are hiring!</font>**
   <br/>http://bestmile.workable.com</center>
@@ -76,7 +76,7 @@ We will explore together the (fascinating) design space of data streaming in the
 
 ### The fundamental problem
 
-How to express a program that process a stream of data while:
+How to express a program that processes a stream of data while:
 - interleaving effects
 - being constant in space and time
 - achieving strongest composability/reusability
@@ -139,7 +139,7 @@ main = do
 
 We also achieve strong composability/reusability ...
 
-... but we loose constant space/time!
+... but we lose constant space/time!
 
 ---
 
@@ -185,7 +185,7 @@ A plenty!
 
 Since I only started hacking with `Haskell` in 2014, I had to make a choice... 
 
-... and as you might have already guessed I did choose `machines` :-)
+... and as you might have already guessed I chose `machines` :-)
 
 **<center><font color="red">But why?</font>**</center>
 
@@ -197,14 +197,14 @@ Since I only started hacking with `Haskell` in 2014, I had to make a choice...
 
 First pratical solution to the problem, appeared in 2008 eventually presented publicly by **Oleg Kiselyov** at FLOPS 2012.
 
-It contains specialized abstractions for each stages which are relatively complex to compose and works with.
+It contains specialized abstractions for each stage which are relatively complex to compose and work with.
 
 - `Iteratee` to consume data (equivalent to `Sink`)
 - `Generator` to produce data (equivalent to `Source`)
 - `Enumeratee` to tranform data (equivalent to `Process`)
 
 The handling of resources is arguably not optimal in the original implementation, 
-a few alternatives (`enumerator`, `iterIO`, ...) where designed trying to unify and improve the design.
+a few alternatives (`enumerator`, `iterIO`, ...) were designed to try to unify and improve the design.
 
 ---
 
@@ -212,7 +212,7 @@ a few alternatives (`enumerator`, `iterIO`, ...) where designed trying to unify 
 
 ### Conduit
 
-Designed initally by **Michael Snoyman** for the **Yesod** <sup>1</sup> web framework, 
+Designed initially by **Michael Snoyman** for the **Yesod** <sup>1</sup> web framework, 
 it put a strong emphasis on exception and resources handling.
 
 The library evolved quite a lot over the years, 
@@ -232,10 +232,10 @@ for the better with automated resources handling or worse when trying to form ni
 
 ### Pipes
 
-Another take to the problem developed by **Gabriel Gonzalez** with a strong emphasis on elegance.
+Another take on the problem developed by **Gabriel Gonzalez** with a strong emphasis on elegance.
 
-All concepts are unifed under a single `Pipe` type which form a nice and composable `Category`,
-like `conduit` it has a specific construct in it's core algebra to interleave effects.
+All concepts are unified under a single `Pipe` type which forms a nice and composable `Category`,
+like `conduit` it has a specific construct in its core algebra to interleave effects.
 
 Unlike `conduit` it does not handle termination,
 a feature which sadly can not be added externally.
@@ -246,11 +246,14 @@ a feature which sadly can not be added externally.
 
 ### Machines
 
-Originally authored by **Edward Kmett** and **Rúnar Bjarnason** on a napkin, 
-it does not try to handle resources managment in the core and leave that job to the user.
+Originally authored by **Edward Kmett**, **Rúnar Bjarnason** and **Dan Doel**, 
+it does not try to handle resources managment in the core and leaves that job to the user.
 
-Unlike any other librairies it does support complex topology by paramterizing the input language, 
+Unlike any other libraries it does support complex topology by parameterizing the input language, 
 and regarding performance it has the best asymptotic complexity among all alternatives.
+
+Conceptually it uses `Machine` as a metaphor (as opposed to a `Pipe`)
+which can take input from different conveyor belts.
 
 Fundamentally the design is not yet complete as some abstractions (`PlanT` and `MachineT`) could be in theory unifed,
 but we don't know yet how to do it!
@@ -286,8 +289,10 @@ The core algebra `Step`.
 data Step k o r
   = Stop
   | Yield o r
-  | forall t. Await (t -> r) (k t) r
+  | Await (k (Plan k o a)) (Plan k o a) -- forall t. Await (t -> r) (k t) r
 ```
+
+
 
 The root of all other types `MachineT` ...
 
@@ -296,7 +301,7 @@ newtype MachineT m k o =
   MachineT { runMachineT :: m (Step k o (MachineT m k o)) }
 ```
 
-... and it's monad-free alias `Machine` which uses existential quantification.
+... and it's monad-free alias `Machine` which uses universal quantification.
 
 ```haskell
 type Machine k o = forall m. Monad m => MachineT m k o
@@ -341,9 +346,18 @@ Ideally we would like to say:
 type SinkT m a = forall b. MachineT m (Is a) b
 ```
 
-But it doesn't works so well in practice :-(
+But it doesn't bring much in practice, 
+it becomes harder to pass the value around and transform it to a process in a later phase.
 
-TODO: ADD MORE INFO OF WHY?
+There is though, a specialized `SinkIO` available in `machines-io`<sup>1</sup>.
+
+```haskell
+type SinkIO m k = MonadIO m => forall a. ProcessT m k a
+```
+
+<br/>
+
+1: https://github.com/aloiscochard/machines-io
 
 ---
 
@@ -351,7 +365,7 @@ TODO: ADD MORE INFO OF WHY?
 
 ### Here comes the plan
 
-A `Machine` is usually construced from a `Plan` which would ideally looks like.
+A `Machine` is usually construced from a `Plan` which would ideally look like.
 
 ```haskell
 data Plan k o a
@@ -387,6 +401,16 @@ newtype PlanT k o m a = PlanT
 Without understanding all the implementation details, 
 what is important to see here is the explicit continuation passing style.
 
+```haskell
+-- | Output a result.
+yield :: o -> Plan k o ()
+yield o = PlanT (\kp ke _ _ -> ke o (kp ()))
+
+-- | Wait for input.
+await :: Category k => Plan (k i) o i
+await = PlanT (\kp _ kr kf -> kr kp id kf)
+```
+
 ---
 
 # Machines Tutorial
@@ -399,10 +423,10 @@ in theory it should be avoidable).
 **<center>Trying to avoid it is definitely an interesting subject of research!</center>**
 
 What it means in practice: 
-- A `Plan` can not change it's program logic during it's execution (think non context-free parser), 
+- A `Plan` can not change its program logic during its execution (think non context-free parser), 
 while a `Machine` can. 
 
-If that doesn't makes any sense to, you can follow this simple advice:
+If that doesn't makes any sense you can follow this simple advice:
 - Start by building a `Plan` (which have a friendlier API), 
 and switch to `Machine` only if you realize you are facing this limitation.
 
@@ -432,7 +456,34 @@ stack build
 
 ### Example 1 - Inc & Dec
 
-Let's start by rewriting our original example.
+Let's start by rewriting our original example!
+
+In order to do so, we'll use a few combinators available in the core library.
+
+```haskell
+-- | Passes through the first n elements from its input then stops.
+taking :: Int -> Process a a
+taking n = construct . replicateM_ n $ await >>= yield
+
+-- | Apply a monadic function to each element of a 'ProcessT'.
+autoM :: Monad m => (a -> m b) -> ProcessT m a b
+autoM f = repeatedly $ await >>= lift . f >>= yield
+
+-- | Generate a 'Source' from any 'Foldable' container.
+source :: Foldable f => f b -> Source b
+source xs = construct (traverse_ yield xs)
+```
+
+Those machines are constructed (using `construct` or `repeatedly`) from a `Plan` 
+which is built out of `yield`s and `await`s.
+
+---
+
+# Machines Tutorial
+
+### Example 1 - Inc & Dec
+
+We can now rewrite our initial sample program.
 
 ```haskell
 import Data.Machine
@@ -459,6 +510,33 @@ main = do
 # Machines Tutorial
 
 ### Example 2 - Fizz Buzz 
+
+For now we didn't do much more than composing existing machines together, 
+what about actually building one ourself?
+
+Let's see how machines are actually built out of plans.
+
+```haskell
+-- | Compile a machine to a model.
+construct :: Monad m => PlanT k o m a -> MachineT m k o
+construct m = MachineT $ runPlanT m
+  (const (return Stop))
+  (\o k -> return (Yield o (MachineT k)))
+  (\f k g -> return (Await (MachineT #. f) k (MachineT g)))
+  (return Stop)
+
+-- | Generates a model that runs a machine until it stops, then start it up again.
+repeatedly :: Monad m => PlanT k o m a -> MachineT m k o
+repeatedly m = construct forever m
+```
+
+---
+
+# Machines Tutorial
+
+### Example 2 - Fizz Buzz 
+
+How to answer a boring interview question using `machines`?
 
 ```haskell
 import Control.Monad
@@ -487,6 +565,39 @@ main = runT_ $ autoM print <~ fizzbuzz <~ source xs
 
 ### Example 3 - Largest Word
 
+Let's look into a few more useful combinators, from the core library.
+
+```haskell
+-- | Break each input into pieces that are fed downstream individually.
+asParts :: Foldable f => Process (f a) a
+asParts = repeatedly $ await >>= traverse_ yield
+
+-- | Return the maximum value from the input
+largest :: (Category k, Ord a) => Machine (k a) a
+largest = fold1 max
+```
+
+In case you want to work with file contents, `machines-io` is here to help you.
+
+```haskell
+sourceHandle :: DataModeIO m a -> Handle -> SourceIO m a
+sourceHandle (r, _) = sourceHandleWith r
+
+byChunk ::  IOData a => IODataMode a
+byChunk = (\h -> hGetChunk h, \h xs -> hPut h xs)
+
+byLine :: IOData a => DataModeIO m a
+byLine = (hGetLine, hPutStrLn)
+```
+
+---
+
+# Machines Tutorial
+
+### Example 3 - Largest Word
+
+How to find the largest word in a given file?
+
 ```haskell
 import Data.Machine
 import System.IO (IOMode(..), withFile)
@@ -502,6 +613,23 @@ main = do
   print xs -- [14]
 ```
 <br/>
+
+---
+
+# Machines Tutorial
+
+### Example 4 - Walking Directory
+
+To deal with directory and their contents there is `machines-directory`.
+
+```haskell
+directoryWalk :: ProcessT IO FilePath FilePath
+directoryContents :: ProcessT IO FilePath [FilePath]
+directories :: ProcessT IO FilePath FilePath
+files :: ProcessT IO FilePath FilePath
+```
+
+Let's skip implementation details for now, we'll come back to it later.
 
 ---
 
@@ -541,7 +669,23 @@ main = do
 
 ### Extra - Walking with a Machine
 
-TODO: show implementation with machine
+To walk a directory, we need to switch between two mode of operations:
+- Listing directories
+- Yielding contents
+
+We have to do that incrementally, and to do so we need more control on the machines execution.
+```haskell
+directoryWalk :: ProcessT IO FilePath FilePath
+directoryWalk = 
+  MachineT . return $ Await (\root -> f [root] []) Refl stopped where
+    f []    []      = directoryWalk
+    f xs    (y:ys)  = MachineT . return $ Yield y $ f xs ys
+    f (x:xs) []      = MachineT $ do
+      ys <- getDirectoryContents x
+      let contents = (x </>) <$> (filter isDirectoryContentsValid $ ys)
+      dirs <- filterM doesDirectoryExist contents
+      runMachineT $ f (dirs ++ xs) contents
+```
 
 ---
 # Thanks!
