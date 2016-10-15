@@ -238,7 +238,7 @@ All concepts are unified under a single `Pipe` type which forms a nice and compo
 like `conduit` it has a specific construct in its core algebra to interleave effects.
 
 Unlike `conduit` it does not handle termination,
-a feature which sadly can not be added externally.
+but it can be added externally as seen in the `pipes-group` library.
 
 ---
 
@@ -651,8 +651,8 @@ import qualified Data.Text as T
 main :: IO ()
 main = do
   dirs <- getArgs
-  runT_ $ (autoM print) <~ largest <~ (autoM count)
-                        <~ files <~ directoryWalk <~ source dirs
+  runT_ $ autoM print <~ largest <~ autoM count
+                      <~ files <~ directoryWalk <~ source dirs
     where
       count :: FilePath -> IO Int
       count file = do
@@ -699,7 +699,7 @@ directoryWalk =
 - [The source code of machines](https://github.com/ekmett/machines) by Edward Kmett and others
 
     </textarea>
-    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
     </script>
     <script>
       var slideshow = remark.create();
