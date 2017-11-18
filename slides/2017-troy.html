@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>The Tale of Troy</title>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# The Tale of Troy
+
+ <img src="http://www.crossoverjacksonville.org/wp-content/uploads/2016/08/71406331_trojan-horse.jpg" width="660" height="378">
+
+ 
+Aloïs Cochard
+
+@aloiscochard
+---
+
+# About me
+
+You can find me online (github, twitter, irc...) as `aloiscochard`.
+
+#### Open Source Contributor
+- Haskell
+  - sarsi, codex, codec-jvm ([eta-lang.org](http://eta-lang.org)), machines-*, ...
+- Scala
+  - scalaz, scato, ...
+- Rust
+  - Coming Soon!
+
+#### Engineer @ Swisscom (CH)
+
+Apply machine learning on telco mobility (big) data. 
+
+More details at https://t.co/CM3zPPIpXX
+
+???
+I'm here to talk about the programming language **Rust**.
+- Who never heard of it before?
+- Who already wrote some programs with Rust?
+
+---
+
+# Introduction
+
+Rust is a systems programming language in the vain of `C` or `C++` 
+
+```rust
+fn main() {
+  println!("Hello, world!");
+}
+```
+
+???
+  Survey:
+    - Who can read C?
+    - Who can write C?
+    - Who think can write safe C code?
+
+---
+
+# Introduction
+
+Rust is a systems programming language in the vain of `C` or `C++` 
+
+```rust
+fn main() {
+  println!("Hello, world!");
+}
+```
+
+While retaining C-like syntax it incorporate a lots of cool new features:
+- <span style="color:green">Pattern matching and algebraic data types</span>
+- <span style="color:green">Higher-order functions</span>
+- <span style="color:green">Immutable by default</span>
+- Task-based concurrency
+- Deterministic management of resources
+- ...
+
+# <span style="color:red"><center>as fast as C++</center></span>
+
+???
+What does that means? - Motivate learning Rust.
+  - Doing system programming 
+    - Writing OS, Drivers, VM, Distributed Systems, ML, ...
+  - Writing GC-less code
+  - ...
+
+Share my own experience:
+  - Stuff I always wanted to do but kept aside
+  - Google GO-Lang was such a disapointment
+
+---
+
+# Agenda
+
+- History
+
+- Functional Rust
+
+- DysFunctional Rust
+
+- Practical Rust
+
+<center><img src="https://www.rust-lang.org/logos/rust-logo-blk.svg" width="120" height="120"></center>
+
+>> **Rust** *is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.* 
+
+<br/>
+
+https://www.rust-lang.org
+
+---
+
+### The Book of Mozilla, 11:14
+
+<center><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Mozilla_dinosaur_head_logo.png" width="325" height="232"></center>
+
+.left[The Beast adopted new raiment and studied the ways of Time and Space and Light and the Flow of energy through the Universe.]
+
+.left[From its studies, the Beast fashioned new structures from **oxidised metal** and proclaimed their glories.]
+
+.left[And the Beast's followers rejoiced, finding renewed purpose in these teachings.]
+
+<br/>
+
+.left[https://en.wikipedia.org/wiki/The_Book_of_Mozilla]
+
+---
+
+# History
+
+2006 - Inception by Graydon Hoare
+
+2009 - Mozilla sponsorship
+
+2010 - Initial release
+
+2011 - Compiler bootstrapping
+
+2012 - Inception of [Servo](https://github.com/servo/servo/commit/783455f684bc613dba25d5c2e54157c336093f35)
+
+>> **Servo** is a modern, high-performance browser engine designed for both application and embedded use.
+
+2017 - Release of [Quantum](https://wiki.mozilla.org/Quantum)
+
+>> Bringing stable portions of **Servo** into **Firefox**.
+
+???
+Firefox Quantum:
+- They manage to implement fine grained parallelism at first try, after *multiple* failed attempt in C++
+---
+
+# Functional Rust
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Immutable by default</center></span>
+
+```rust
+let i = 3;
+i = i + 1;
+```
+
+```rust
+fn f(i: i8) -> () {
+  i = i + 1;
+}
+```
+
+.red[error: cannot assign twice to immutable variable `i`]
+
+```rust
+let mut i = 3;
+i += 1;
+```
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>First class functions</center></span>
+
+```rust
+let f = |a| a + 1;
+
+assert!(43 == f(42));
+```
+
+???
+Local type inference did kick-in to resolve the type of `f`
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>First class functions</center></span>
+
+```rust
+let f: fn(i8) -> i8 = |a| a + 1;
+
+assert!(43 == f(42));
+```
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Closures</center></span>
+
+```rust
+let x = 1;
+let f = |a| a + x;
+
+assert!(43 == f(42));
+```
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Closures</center></span>
+
+```rust
+let x = 1;
+let f: fn(i8) -> i8 = |a| a + x;
+
+assert!(43 == f(42));
+```
+
+.red[error: mismatched types]
+.red[
+> expected `fn(i8) -> i8`<br/>
+  found `[closure@src/...: x:_]`
+]
+
+Type got infered based on the relationship with the enclosing environment.
+
+???
+By default functions are not heap allocated, ...
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Higher-order functions</center></span>
+
+```rust
+fn hof(i: i8, f: fn(i8) -> i8) -> i8 {
+  f(f(i))
+}
+
+let f: fn(i8) -> i8 = |a| a + 1;
+
+let y = hof(42, f);
+assert!(44 == y);
+```
+
+???
+But what if we want to pass a closure here?
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Higher-order functions</center></span>
+
+```rust
+fn hof<F>(i: i8, f: F) -> i8 where F: Fn(i8) -> i8 {
+  f(f(i))
+}
+
+let x = 1;
+let f = |a| a + x;
+
+let y = hof(42, f);
+assert!(44 == y);
+```
+
+Using lambda expression:
+```rust
+let y = hof(42, |a| a + x);
+assert!(44 == y);
+```
+
+.center[No heap allocations happening here!]
+
+???
+Using parametric function type, we get polymorphism and let the compiler optimize properly.
+
+Avoiding heap allocation entierly.
+
+But what if we want to hand out a closure as output?
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Higher-order functions</center></span>
+
+
+```rust
+fn hof<F>(i: i8, f: F) -> i8 
+    where F: Fn(i8) -> i8 {
+  f(f(i))
+}
+
+fn mk_f(x: i8) -> Box<Fn(i8) -> i8> {
+  let f = move |a| a + x;
+
+  Box::new(f)
+}
+```
+
+```rust
+let x = 1;
+let f = mk_f(x);
+
+let y = hof(42, f.as_ref()); // From Box<T> to &T
+assert!(44 == y);
+```
+
+???
+Box trigger heap allocation, like a traditional closure in other languages.
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Iterators</center></span>
+
+```rust
+let xs: Vec<i8> = vec![1, 2, 3, 4];
+let ys: Vec<i8> = vec![2, 4, 6, 8];
+
+let zs: Vec<i8> =
+  xs.iter()
+    .zip(ys.iter())
+    .map(|(i, c)| i * c)
+    .filter(|&x| x > 10)
+    .collect();
+
+assert!(zs == vec![18, 32]);
+```
+
+???
+Iterator are evaluated lazy, here nothing happens before we call `collect`.
+- This whole computation is done in only one pass (Fusion)
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Algebraic data types</center></span>
+
+```rust
+enum Maybe<A> {
+  Some(A),
+  None
+}
+```
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Algebraic data types</center></span>
+
+```rust
+enum Maybe<A> {
+  Some(A),
+  None
+}
+```
+
+```rust
+let x = Some(42);
+
+let is_defined = match x {
+  None    => false,
+//Some(_) => true,
+};
+
+assert!(is_defined == true);
+```
+
+.red[error:  non-exhaustive patterns: `Some(_)` not covered]
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Algebraic data types</center></span>
+
+```rust
+enum Maybe<A> {
+  Some(A),
+  None
+}
+```
+
+```rust
+let x = Some(42);
+
+let is_defined = match x {
+  None    => false,
+  Some(_) => true,
+};
+
+assert!(is_defined == true);
+```
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Algebraic data types</center></span>
+
+```rust
+#[derive(Clone, Debug)]
+pub enum Nat {
+  Zero,
+  Succ(Nat),
+}
+```
+
+.red[error:  recursive type `nat::Nat` has infinite size]
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Algebraic data types</center></span>
+
+```rust
+#[derive(Clone, Debug)]
+pub enum Nat {
+  Zero,
+  Succ(Box<Nat>),
+}
+```
+
+```rust
+pub fn add(this: &mut Nat, that: &Nat) -> () {
+  match that {
+    &Zero           => { },
+    &Succ(ref n)    => {
+      *this = Succ(Box::new(this.clone()));
+      add(this, n.as_ref());
+    }
+  }
+}
+```
+
+???
+Mutation have to be used here: 
+>> as we are working with references, there is no way to create new values "generate" new ownership
+
+But we can encapsulate that in a immutable API ...
+By implementing the `Add` trait we can operators for our custom types.
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Type classes</center></span>
+
+```rust
+pub trait Semigroup {
+  fn append(&self, b: &Self) -> Self;
+}
+
+pub trait Monoid : Semigroup {
+  fn empty() -> Self;
+}
+```
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Type classes</center></span>
+
+```rust
+pub trait Semigroup {
+  fn append(&self, b: &Self) -> Self;
+}
+
+pub trait Monoid : Semigroup {
+  fn empty() -> Self;
+}
+```
+
+```rust
+impl Semigroup for u8 { fn append(&self, b: &u8) -> u8 { self + b } }
+impl Monoid for u8 { fn empty() -> u8 { 0 } }
+```
+
+```rust
+use {Monoid, Semigroup};
+
+let x = empty::<u8>().append(&42);
+assert!(42 == x);
+```
+
+???
+Inheritance for type classes, but not for data types (like in Haskell)
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Associated Types</center></span>
+
+```rust
+trait Graph<N, E> {
+    fn edges(&self, &N) -> Vec<E>;
+}
+```
+
+```rust
+fn distance<G: Graph<N, E> N, E>(graph: &G, start: &N, end: &N) -> u32 { ... }
+```
+
+
+???
+Associated types can provide functionality similar to Type Familiy (Haskell).
+
+Here, We have to define the `E` type parameter that we don't use in our distance function...
+
+---
+
+# Functional Rust
+
+## <span style="color:green"><center>Associated Types</center></span>
+
+```rust
+trait Graph {
+  type N;
+  type E;
+
+  fn edges(&self, &N) -> Vec<E>;
+}
+```
+
+```rust
+impl Graph for Foo {
+  type N = u32;
+  type E = u32;
+}
+```
+
+```rust
+fn distance<G: Graph>(graph: &G, start: &G::N, end: &G::N) -> u32 { ... }
+```
+
+---
+
+# DysFunctional Rust
+
+---
+
+# DysFunctional Rust
+
+## <span style="color:red"><center>Higher-kinded types</center></span>
+
+```rust
+trait Functor<F<_>> {
+  fn map<A, B>(&self: F<A>, f: fn(A) -> B) -> F<B>;
+}
+```
+
+???
+Ideally we would like to define Functor with a trait like that...
+
+... but that won't compile: no higher-kinded types.
+
+---
+
+# DysFunctional Rust
+
+## <span style="color:red"><center>Higher-kinded types</center></span>
+
+```rust
+pub trait Map<A, B, F> where F: Fn(&A) -> B {
+  type Out;
+  fn map(&self, f: F) -> Self::Out;
+}
+```
+
+```rust
+pub trait FlatMap<A, B, F> where F: Fn(&A) -> Self::Out {
+  type Out;
+  fn flat_map(&self, f: F) -> Self::Out;
+}
+```
+
+???
+There exists some experiment to encode typeclasses with alternative encoding, 
+but they are not practical.
+
+---
+
+# DysFunctional Rust
+
+## <span style="color:red"><center>Higher-kinded types</center></span>
+
+<center><img src="http://josephiregbu.com/wp-content/uploads/2016/11/never_lose_hope_by_cre8art4life-d6btr4r.png" width="300" height="300"></center>
+
+.center[### RFC 324 - [https://github.com/rust-lang/rfcs/issues/324](https://github.com/rust-lang/rfcs/issues/324)]
+
+---
+
+# DysFunctional Rust
+
+## <span style="color:red"><center>Effect tracking</center></span>
+
+```rust
+impl Monoid for u8 {
+  fn empty() -> u8 {
+
+    // Heh
+    println!("Launch rocket!");
+
+    0
+  }
+}
+```
+
+<center><img src="https://static1.squarespace.com/static/54e4862de4b0004c775a3d5a/55c63536e4b0960d6d1bebe2/577e191146c3c42b040b7a84/1504521468562/4+India.png?format=500w" width="350" height="260"></center>
+
+
+???
+Having HKT would enable the design of effect librairies
+
+---
+
+# DysFunctional Rust
+
+## <span style="color:red"><center>Variance rules</center></span>
+
+```rust
+struct Foo<'a, 'b, A: 'a, B: 'b, C, D, E, F, G, H> {
+    a: &'a A,     // variant over 'a and A
+    b: &'b mut B, // variant over 'b and invariant over B
+    c: *const C,  // variant over C
+    d: *mut D,    // invariant over D
+    e: Vec<E>,    // variant over E
+    f: Cell<F>,   // invariant over F
+    g: G,         // variant over G
+    h1: H,        // would also be variant over H except...
+    h2: Cell<H>,  // invariant over H, because invariance wins
+}
+```
+
+[https://doc.rust-lang.org/beta/nomicon/subtyping.html](https://doc.rust-lang.org/beta/nomicon/subtyping.html)
+
+---
+
+# Practical Rust
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Error handling</center></span>
+
+```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Error handling</center></span>
+
+```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+```rust
+type User = ();
+
+enum Error {
+  NotFound,
+  Unauthorized,
+}
+
+fn login(user_id: u8) -> Result<User, Error> {
+  Ok(())
+}
+
+fn get_name(user: User) -> Result<String, Error> {
+  Ok(String::from("Alice"))
+}
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Error handling</center></span>
+
+```rust
+fn print_name(user_id: u8) -> Result<(), Error> {
+  login(user_id)
+    .and_then(|u| get_name(u)) // == Bind/FlatMap
+    .map(|name| {
+
+      println!("{}", name);
+
+      ()
+    })
+}
+```
+
+???
+Using `and_then` when can combine results (this is the monadic bind).
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Error handling</center></span>
+
+```rust
+fn print_name(user_id: u8) -> Result<(), Error> {
+  let user = login(user_id)?;
+  let name = get_name(user)?;
+
+  println!("{}", name);
+
+  Ok(())
+}
+```
+
+<br/>
+
+.center[This is a specialized form of **idiom brackets**!]
+
+<br/>
+Applicative Programming with Effects (Conor McBride)
+[http://www.staff.city.ac.uk/~ross/papers/Applicative.html](http://www.staff.city.ac.uk/~ross/papers/Applicative.html)
+
+???
+This syntax called "Idiom brackets" is implemented in Idris with the `!` symbol.
+
+In Rust, it works only on `Result`! No `Applicative` defined ...
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Lifetimes</center></span>
+
+```rust
+fn foo(s: &i8);        // implicit
+fn foo<'a>(s: &'a i8); // explicit
+```
+<!-- > -->
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Lifetimes</center></span>
+
+```rust
+struct Foo { value: i8 }
+struct Bar { foo: Foo }
+
+fn choose(a: &Bar, b: &Bar) -> &Foo {
+  if a.foo.value > 2 { &a.foo } else { &b.foo }
+}
+```
+
+.red[error: missing lifetime specifier]
+
+
+```rust
+let ref b1 = Bar { foo: Foo { value: 2 } };
+let ref b2 = Bar { foo: Foo { value: 4 } };
+
+choose(b1, b2);
+```
+
+???
+Elided means there is an implicit lifetime parameter being infered.
+
+Lifetime parameter provide a way to guide the borrow checker to track ownerships.
+
+Compiler says:
+>> help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `a` or `b`
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Lifetimes</center></span>
+
+```rust
+struct Foo { value: i8 }
+struct Bar { foo: Foo }
+
+fn choose<'a>(a: &'a Bar, b: &'a Bar) -> &'a Foo {
+  if a.foo.value > 2 { &a.foo } else { &b.foo }
+}
+```
+
+```rust
+let ref b1 = Bar { foo: Foo { value: 2 } };
+let ref b1 = Bar { foo: Foo { value: 4 } };
+
+choose(b1, b2);
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Lifetimes</center></span>
+
+```rust
+fn first<'a>(a: &Bar, b: &'a Bar) -> &'a Foo {
+  &a.foo
+}
+```
+
+.red[error: lifetime `'a` required]
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Lifetimes</center></span>
+
+```rust
+fn first<'a>(a: &'a Bar, b: &Bar) -> &'a Foo {
+  &a.foo
+}
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Mutation tracking</center></span>
+
+```rust
+fn f(file: File) -> Result<String, Error> {
+  let mut s = String::new();
+
+  file.read_to_string(&mut s)?;
+
+  Ok(s)
+}
+```
+
+.red[error: cannot borrow immutable argument `file` as mutable]
+
+```rust
+fn run() -> Result<(), Error> {
+  let path = Path::new("/tmp/foo.txt");
+  let file = File::open(path)?;
+
+  f(file)?;
+
+  Ok(())
+}
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Mutation tracking</center></span>
+
+```rust
+fn f(file: &mut File) -> Result<String, Error> {
+  let mut s = String::new();
+
+  file.read_to_string(&mut s)?;
+
+  Ok(s)
+}
+```
+
+<br/>
+
+```rust
+fn run() -> Result<(), Error> {
+  let path = Path::new("/tmp/foo.txt");
+  let mut file = File::open(path)?;
+
+  f(&mut file)?;
+
+  Ok(())
+}
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Affine types</center></span>
+
+```rust
+fn run() -> Result<(), Error> {
+  let path = Path::new("/tmp/foo.txt");
+  let mut file = File::open(path)?;
+
+  drop(file);
+
+  f(&mut file)?;
+
+  Ok(())
+}
+```
+
+.red[error: use of moved value: `file`]
+
+
+???
+Linear types: useed exactly once.
+Affine types: use at most one.
+
+There can be only one owner (or "use") of the value.
+
+Passing by reference is not borrowing ownership, but by value does!
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Affine types</center></span>
+
+```rust
+fn run() -> Result<(), Error> {
+  let path = Path::new("/tmp/foo.txt");
+  let mut file = File::open(path)?;
+
+  f(&mut file)?;
+
+  drop(file);
+
+  Ok(())
+}
+```
+
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Wrapper types</center></span>
+
+- ### `Box<T>` to hand out borrowed values
+- ### `Arc<T>` to share a value between threads
+- ### `Rc<T>` to share ownership using reference counting
+
+???
+Box introduce heap allocation.
+Arc and Rc does introduce a runtime cost for managment.
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Testing</center></span>
+
+```rust
+#[cfg(test)]
+mod tests {
+  #[test]
+  fn it_works() {
+    assert!(42 = f(2));
+  }
+}
+```
+
+```
+running 1 test
+test it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>Benchmarking</center></span>
+
+```rust
+#[cfg(test)]
+mod tests {
+  #[bench]
+  fn bench_f(b: &mut Bencher) {
+    b.iter(|| f(2));
+  }
+}
+```
+
+```
+running 1 tests
+test tests::bench_f ... bench:         1 ns/iter (+/- 0)
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 1 measured
+```
+
+---
+
+# Practical Rust
+
+## <span style="color:blue"><center>... More ...</center></span>
+
+- ### Automatic type classes (Trait) derivation
+
+- ### Concurrency with Channels (ala Haskell)
+
+- ### Hygienic macro system (supporting recursive and variadic macros)
+
+- ### Parallel Iterators with [Rayon](https://github.com/rayon-rs/rayon)
+
+- ...
+
+
+---
+
+# Thanks!
+
+- Start learning **Rust** now with [rustbyexample.com](https://rustbyexample.com/)
+
+## References
+
+- [The Rust Programming Language](https://doc.rust-lang.org/book/) - The Book
+- [Interview on Rust](https://www.infoq.com/news/2012/08/Interview-Rust) - with Graydon Hoare
+- [Rust for Functional Programmers](https://arxiv.org/abs/1407.5670) - by Raphel Poss (`kena`)
+- [Fearless Concurrency in Firefox Quantum](https://blog.rust-lang.org/2017/11/14/Fearless-Concurrency-In-Firefox-Quantum.html) - a success story from Mozilla
+
+
+???
+Rust is a Functional Language even if not exactly advertised as such ...
+  (... the main reason is that "FP" might scare C/C++ programmer)
+
+In a nutshell, Rust keeps the C abstract model but innovate at language level.
+
+I hope this presentation gave you motivation to learn this nice language... 
+... and maybe finally tackle those problems you kept aside because of lack of proper tool for systems programming!
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="https://remarkjs.com/remark.language.js"></script>
+    <script>
+      var slideshow = remark.create({
+          highlightStyle: 'monokai',
+          highlightLanguage: 'remark',
+          highlightLines: true
+        }) ;
+    </script>
+  </body>
+</html>
