@@ -1,8 +1,3 @@
----
-layout: default
-subsections: []
----
-
 # Aloïs Cochard
 
 ## Passionate Hacker
@@ -41,14 +36,9 @@ You can find me on IRC using the freenode network: #haskell #haskell-lens #scala
 
 # Experience
 
-## 2014 - 2019
-**Swisscom** - [swisscom.ch](https://www.swisscom.ch)
+## 2014 - Current
 
-
-_Design and implementation of the Big Data-Mobility Insights Platform at the Data Analytics and AI department_
-
-## 2014 - 2017
-**Bestmile** - [bestmile.com](https://bestmile.com)
+**BestMile** - [bestmile.com](https://bestmile.com)
 
 _Design and implementation of a cloud platform for the operation and optimization of autonomous vehicles_
 
@@ -106,3 +96,4 @@ _Design and implementation of a semantic search engine and text analytics framew
 * Designing compiler and programming languages
 * Playing acoustic musical instrument
 * Sound synthesis and electronic music production
+* Exploring dead (natural) languages
