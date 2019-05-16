@@ -18,6 +18,7 @@ I have contributed to a bunch of open source projects and have also maintained m
 
 
 ### Talks
+* The Tale of Troy (Functional Conf - Nov 2017) < [video](https://www.youtube.com/watch?v=BTWGgfvLOi8) / [slides](http://aloiscochard.github.io/slides/2017-troy.html) >
 * Welcome to the Machines (Functional Conf - Nov 2016) < [video](https://www.youtube.com/watch?v=sEfn_x245mE) / [slides](http://aloiscochard.github.io/slides/2016-machines.html) >
 * The Unreasonable Effectiveness of Erasure (LamdaConf - Sep 2016) < [video](https://www.youtube.com/watch?v=nr9zrrN_R9o) >
 * Introduction to Scalaz (Scala Romandie - Mars 2015) < [slides](https://t.co/8IChYYlfMR) >
@@ -35,6 +36,11 @@ alois.cochard < AT > gmail.com / skype: alois.cochard
 You can find me on IRC using the freenode network: #haskell #haskell-lens #scalaz
 
 # Experience
+
+## 2019 - Present
+**Alephium** - [alephium.org](https://www.alephium.org)
+
+_Design and implementation of a public, permissionless blockchain platform._
 
 ## 2017 - 2019
 **Swisscom** - [swisscom.ch](https://www.swisscom.ch)
