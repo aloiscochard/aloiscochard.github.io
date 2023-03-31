@@ -2,20 +2,19 @@
 
 ## Passionate Hacker
 
-I'm a software engineer with a strong passion for functional programming languages, type theory and distributed computing.
+I'm a software engineer with a strong passion for functional programming languages, type theory and neural networks architecture.
+In the past, I have contributed to a bunch of open source projects and have also maintained my owns, you can find them on my GitHub account.
 
-I have contributed to a bunch of open source projects and have also maintained my owns, you can find them on my GitHub account.
-
-* [http://github.com/aloiscochard](http://github.com/aloiscochard)
+My hobby includes playing music, learning about computer security and writing video games.
 
 ### Skills & Interests
+* Artificial General Intelligence
 * Programming Languages
 * Type Theory
 * Category Theory
 * Concurrency and Parallelism
 * Distributed Computing
 * Formal Methods
-
 
 ### Talks
 * The Tale of Troy (Functional Conf - Nov 2017) < [video](https://www.youtube.com/watch?v=BTWGgfvLOi8) / [slides](http://aloiscochard.github.io/slides/2017-troy.html) >
@@ -25,22 +24,26 @@ I have contributed to a bunch of open source projects and have also maintained m
 * A gentle introduction to DSL design in Scala (FunctionalMedia - Mars 2014) < [slides](http://prezi.com/3pq-fjwxbatb) >
 * One API to rule them all (ScalaDays 2013) < [video](http://www.parleys.com/play/51c0d0ece4b0ed877035680e) >
 
-# Contact
-
-alois.cochard < AT > gmail.com / skype: alois.cochard
+# Social / GitHub / Matrix
 
 [http://twitter.com/aloiscochard](http://www.twitter.com/aloiscochard)
-
 [http://ch.linkedin.com/in/aloiscochard](http://ch.linkedin.com/in/aloiscochard)
+[https://functional.cafe/@alois](https://functional.cafe/@alois)
+[http://github.com/aloiscochard](http://github.com/aloiscochard)
 
-You can find me on IRC using the freenode network: #haskell #haskell-lens #scalaz
+You can find me on matrix: @ac:kokol.ch
 
 # Experience
 
-## 2019 - Present
-**Alephium** - [alephium.org](https://www.alephium.org)
+## 2022 - Present
+**Tweag/Modus Create** - [www.tweag.io](https://www.tweag.io/)/[moduscreate.com](https://moduscreate.com/)
 
-_Design and implementation of a public, permissionless blockchain platform._
+_Open Source Consultant for the [buck2 project](https://github.com/facebook/buck2)_
+
+## 2021 - 2022
+**Tweag** - [www.tweag.io](https://www.tweag.io/)
+
+_Consultant working mainly on the infrastructure of an autonomous vehicle innovation lab._
 
 ## 2017 - 2019
 **Swisscom** - [swisscom.ch](https://www.swisscom.ch)
